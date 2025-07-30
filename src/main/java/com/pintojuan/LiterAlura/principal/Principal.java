@@ -26,7 +26,7 @@ public class Principal {
                 """);
             System.out.println("Ingrese una opcion: ");
             opcion = scanner.nextInt();
-
+            scanner.nextLine();
             switch (opcion) {
                 case 1:
                     getBookByTitle();
@@ -68,7 +68,7 @@ public class Principal {
         System.out.println("Ingrese el nombre de un libro a consultar: ");
         var nameBook = scanner.nextLine();
         var json = client.request(nameBook);
-        System.out.println(json);
+//        System.out.println(json + "Hola");
         //return conversionData.getData(json, BookData.class);
     }
 }

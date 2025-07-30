@@ -2,7 +2,6 @@ package com.pintojuan.LiterAlura.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,14 +13,25 @@ public class Book {
     private String title;
     private String language;
     private double countDownloads;
-    @OneToMany(mappedBy = "id_autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Author> authors = new ArrayList<>();
+    @ManyToMany
+    private List<Author> authors;
+
+    public Book() {}
 
     public Book(BookData bookData) {
         this.title = bookData.title();
         this.language = bookData.language();
         this.countDownloads = bookData.countDownloads();
         this.authors = bookData.authors();
+    }
+
+    @Override
+    public String toString() {
+        return
+                ", title='" + title + '\'' +
+                ", language='" + language + '\'' +
+                ", countDownloads=" + countDownloads +
+                ", authors=" + authors;
     }
 
     public String getTitle() {
@@ -54,5 +64,13 @@ public class Book {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
