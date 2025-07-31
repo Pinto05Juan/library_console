@@ -11,14 +11,16 @@ public class Client {
     private final HttpClient client;
 
     public Client() {
-        client = HttpClient.newHttpClient();
+        client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.ALWAYS)
+                .build();
     }
 
     public String request(String nameBook) {
         HttpRequest request;
         try {
             request = HttpRequest.newBuilder()
-                    .uri(new URI("https://gutendex.com/books?search=" + nameBook))
+                    .uri(new URI("https://gutendex.com/books/?search=" + nameBook.replace(" ", "+")))
                     .build();
             try {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

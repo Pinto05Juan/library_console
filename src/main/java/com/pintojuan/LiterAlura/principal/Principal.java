@@ -1,9 +1,9 @@
 package com.pintojuan.LiterAlura.principal;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pintojuan.LiterAlura.client.Client;
 import com.pintojuan.LiterAlura.models.Book;
 import com.pintojuan.LiterAlura.models.BookData;
+import com.pintojuan.LiterAlura.models.BookResponse;
 import com.pintojuan.LiterAlura.service.ConversionData;
 
 import java.util.Scanner;
@@ -66,9 +66,14 @@ public class Principal {
 
     private void getBookByTitle() {
         System.out.println("Ingrese el nombre de un libro a consultar: ");
-        var nameBook = scanner.nextLine();
-        var json = client.request(nameBook);
-//        System.out.println(json + "Hola");
-        //return conversionData.getData(json, BookData.class);
+        String nameBook = scanner.nextLine();
+        String json = client.request(nameBook);
+//        System.out.println(json);
+        BookResponse bookResponse = conversionData.getData(json, BookResponse.class);
+        if (!bookResponse.results().isEmpty()) {
+            BookData bookData = bookResponse.results().getFirst();
+            Book bookBuscado = new Book(bookData);
+            System.out.println(bookBuscado);
+        }
     }
 }

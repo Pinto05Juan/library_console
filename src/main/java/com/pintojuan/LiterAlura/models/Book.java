@@ -11,7 +11,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String language;
+    private List<String> language;
     private double countDownloads;
     @ManyToMany
     private List<Author> authors;
@@ -22,7 +22,9 @@ public class Book {
         this.title = bookData.title();
         this.language = bookData.language();
         this.countDownloads = bookData.countDownloads();
-        this.authors = bookData.authors();
+        this.authors = bookData.authors().stream()
+                .map(Author::new)
+                .toList();
     }
 
     @Override
@@ -42,11 +44,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getLanguage() {
+    public List<String> getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(List<String> language) {
         this.language = language;
     }
 

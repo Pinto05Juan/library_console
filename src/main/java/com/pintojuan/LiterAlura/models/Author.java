@@ -25,6 +25,14 @@ public class Author {
         this.deathYear = authorData.deathYear();
     }
 
+    @Override
+    public String toString() {
+        return
+                "name='" + name + '\'' +
+                ", birthYear=" + birthYear +
+                ", deathYear=" + deathYear;
+    }
+
     public String getName() {
         return name;
     }
