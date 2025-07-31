@@ -4,6 +4,8 @@ import com.pintojuan.LiterAlura.client.Client;
 import com.pintojuan.LiterAlura.models.Book;
 import com.pintojuan.LiterAlura.models.BookData;
 import com.pintojuan.LiterAlura.models.BookResponse;
+import com.pintojuan.LiterAlura.recursos.Recurso;
+import com.pintojuan.LiterAlura.repository.BookRepository;
 import com.pintojuan.LiterAlura.service.ConversionData;
 
 import java.util.Scanner;
@@ -12,6 +14,11 @@ public class Principal {
     private ConversionData conversionData = new ConversionData();
     private Scanner scanner = new Scanner(System.in);
     private Client client = new Client();
+    private BookRepository repository;
+
+    public Principal(BookRepository repository) {
+        this.repository = repository;
+    }
     public void showMenu() {
         System.out.println("Bienvenido al LiterAlura");
         var opcion = -1;
@@ -25,8 +32,7 @@ public class Principal {
                 0 - Salir
                 """);
             System.out.println("Ingrese una opcion: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            opcion = Recurso.ingresarEntero(0,6);
             switch (opcion) {
                 case 1:
                     getBookByTitle();
@@ -73,7 +79,10 @@ public class Principal {
         if (!bookResponse.results().isEmpty()) {
             BookData bookData = bookResponse.results().getFirst();
             Book bookBuscado = new Book(bookData);
-            System.out.println(bookBuscado);
+            repository.save(bookBuscado);
+            System.out.println("Libro regitrado");
+        } else {
+            System.out.println("Libro no encontrado");
         }
     }
 }
