@@ -2,6 +2,7 @@ package com.pintojuan.LiterAlura.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,16 +12,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private List<String> language;
+    private String language;
     private double countDownloads;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //Creamos una tabla intermedia para conectar las relaciones
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
     private List<Author> authors;
 
     public Book() {}
 
     public Book(BookData bookData) {
         this.title = bookData.title();
-        this.language = bookData.language();
+        this.language = String.join(",", bookData.language());
         this.countDownloads = bookData.countDownloads();
         this.authors = bookData.authors().stream()
                 .map(Author::new)
@@ -30,10 +37,10 @@ public class Book {
     @Override
     public String toString() {
         return
-                ", title='" + title + '\'' +
-                ", language='" + language + '\'' +
-                ", countDownloads=" + countDownloads +
-                ", authors=" + authors;
+                "Titulo: " + title + '\n' +
+                "Idioma: " + language+ '\n' +
+                "Numero de descargar: " + countDownloads + "\n" +
+                "Autores: " + authors.getFirst().getName() + "\n"; //Solucion parcial, arreglar despues
     }
 
     public String getTitle() {
@@ -44,11 +51,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<String> getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(List<String> language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 

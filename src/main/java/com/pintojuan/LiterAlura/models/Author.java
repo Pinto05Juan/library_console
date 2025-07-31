@@ -3,6 +3,7 @@ package com.pintojuan.LiterAlura.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Author {
     private String name;
     private int birthYear;
     private int deathYear;
-    @OneToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
     public Author() {}
@@ -28,9 +29,10 @@ public class Author {
     @Override
     public String toString() {
         return
-                "name='" + name + '\'' +
-                ", birthYear=" + birthYear +
-                ", deathYear=" + deathYear;
+                "Autor: " + name + '\n' +
+                "Fecha de nacimiento: " + birthYear + "\n" +
+                "Fecha de fallecimiento: " + deathYear + "\n" +
+                "Libros: " + books.getFirst().getTitle() + "\n"; //Solucion parcial, arreglar impresion
     }
 
     public String getName() {
