@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    private ConversionData conversionData = new ConversionData();
-    private Scanner scanner = new Scanner(System.in);
-    private Client client = new Client();
+    private final ConversionData conversionData = new ConversionData();
+    private final Scanner scanner = new Scanner(System.in);
+    private final Client client = new Client();
     private BookRepository repositoryBook;
     private AuthorRepository repositoryAuthor;
 
@@ -49,10 +49,10 @@ public class Principal {
                     getAuthors();
                     break;
                 case 4:
-                    //getAuthorsByYear();
+                    getAuthorsByYear();
                     break;
                 case 5:
-                    //7getBookByLanguage();
+                    getBookByLanguage();
                     break;
                 case 0:
                     System.out.println("Cerrando el programa...");
@@ -64,9 +64,22 @@ public class Principal {
     }
 
     private void getBookByLanguage() {
+        System.out.println("Ingrese el idioma el cual desee ver sus libros: ");
+        System.out.println("""
+                en - Ingles
+                es - Español
+                fr - Frances
+                """);
+        var language = scanner.nextLine();
+        List<Book> books = repositoryBook.findByLanguage(language);
+        books.forEach(System.out::println);
     }
 
     private void getAuthorsByYear() {
+        System.out.println("Ingrese el año para mostrar a los autores vivos: ");
+        var year = Recurso.ingresarEntero(0, 2025);
+        List<Author> authors = repositoryAuthor.getAuthorByYear(year);
+        authors.forEach(System.out::println);
     }
 
     private void getAuthors() {

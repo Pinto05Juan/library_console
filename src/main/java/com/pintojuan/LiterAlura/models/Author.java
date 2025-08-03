@@ -32,7 +32,7 @@ public class Author {
                 "Autor: " + name + '\n' +
                 "Fecha de nacimiento: " + birthYear + "\n" +
                 "Fecha de fallecimiento: " + deathYear + "\n" +
-                "Libros: " + books.getFirst().getTitle() + "\n"; //Solucion parcial, arreglar impresion
+                "Libros: " + books.getFirst().getTitle() + "\n";
     }
 
     public String getName() {

@@ -1,8 +1,6 @@
 package com.pintojuan.LiterAlura.models;
-
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,7 +38,7 @@ public class Book {
                 "Titulo: " + title + '\n' +
                 "Idioma: " + language+ '\n' +
                 "Numero de descargar: " + countDownloads + "\n" +
-                "Autores: " + authors.getFirst().getName() + "\n"; //Solucion parcial, arreglar despues
+                "Autores: " + authors.getFirst().getName() + "\n";
     }
 
     public String getTitle() {
